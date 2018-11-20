@@ -26,7 +26,7 @@ public class BooksController {
 
     @PostMapping("/books")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Object> addBook(@RequestBody BookForm form) {
+    public ResponseEntity<Object> addBook(@RequestBody BookForm form, @RequestHeader("token") String token) {
         booksService.addBook(form);
         return ResponseEntity.ok().build();
     }
