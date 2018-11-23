@@ -10,13 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import ru.ivmiit.security.authentications.TokenAuthentication;
 
-/**
- * 11.10.2018
- * JwtTokenAuthenticationProvider
- *
- * @author Sidikov Marsel (First Software Engineering Platform)
- * @version v1.0
- */
 @Component
 public class TokenAuthenticationProvider implements AuthenticationProvider {
 

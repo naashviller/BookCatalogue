@@ -8,13 +8,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-/**
- * 28.04.2018
- * JwtTokenAuthFilter
- *
- * @author Sidikov Marsel (First Software Engineering Platform)
- * @version v1.0
- */
+
 @Component
 public class TokenAuthenticationFilter implements Filter {
 

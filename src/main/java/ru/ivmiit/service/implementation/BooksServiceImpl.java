@@ -47,9 +47,9 @@ public class BooksServiceImpl implements BooksService {
 
     @Override
     public void changeBookStatus(EditBookStatusForm form) {
-      UserBook userBook = userBooksRepository.findUserBookByBook(bookRepository.findBookById(form.getBookId()));
-      userBook.setBookStatus(form.getBookStatus());
-      userBooksRepository.save(userBook);
+        UserBook userBook = userBooksRepository.findUserBookByBook(bookRepository.findBookById(form.getBookId()));
+        userBook.setBookStatus(form.getBookStatus());
+        userBooksRepository.save(userBook);
     }
 
 
