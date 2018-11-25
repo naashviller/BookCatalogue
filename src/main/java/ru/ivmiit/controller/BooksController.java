@@ -8,7 +8,10 @@ import ru.ivmiit.dto.BookDto;
 import ru.ivmiit.forms.BookForm;
 import ru.ivmiit.forms.EditBookStatusForm;
 import ru.ivmiit.model.Book;
+import ru.ivmiit.model.UserBook;
+import ru.ivmiit.model.enums.BookStatus;
 import ru.ivmiit.service.BooksService;
+import ru.ivmiit.service.UserBooksService;
 
 import java.util.List;
 
@@ -18,10 +21,18 @@ public class BooksController {
     @Autowired
     private BooksService booksService;
 
+    private UserBooksService userBooksService;
+
     @GetMapping("/books")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<BookDto>> getAllBooks(@RequestHeader("token") String token) {
         return ResponseEntity.ok(booksService.getAllBooks());
+    }
+
+    @GetMapping("/books/search/status")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<List<UserBook>> getAllBooksBooked(@PathVariable("status") BookStatus status, @RequestHeader("token") String token) {
+        return ResponseEntity.ok(userBooksService.getAllBooksBooked(status));
     }
 
     @PostMapping("/books")

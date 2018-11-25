@@ -6,7 +6,7 @@ import ru.ivmiit.model.enums.BookStatus;
 
 @Data
 public class EditBookStatusForm {
-    public Integer bookId;
+    public Long bookId;
     private BookStatus bookStatus;
 
 }

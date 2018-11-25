@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Builder
 public class UserDto {
 
-    private Integer id;
+    private Long id;
     private String login;
     private String username;
     private Role role;

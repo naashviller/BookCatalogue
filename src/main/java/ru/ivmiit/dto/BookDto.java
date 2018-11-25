@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 public class BookDto {
-    private Integer id;
+    private Long id;
     private String title;
     private String genre;
     private String authorName;

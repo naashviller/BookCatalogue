@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class BookForm {
-    private Integer id;
+    private Long id;
     private String title;
     private String genre;
     private Integer authorId;

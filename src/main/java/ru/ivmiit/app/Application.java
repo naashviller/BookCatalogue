@@ -1,4 +1,4 @@
-package ru.ivmiit;
+package ru.ivmiit.app;
 
 
 import org.springframework.boot.SpringApplication;
