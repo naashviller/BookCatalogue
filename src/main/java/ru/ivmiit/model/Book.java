@@ -1,6 +1,7 @@
 package ru.ivmiit.model;
 
 import lombok.*;
+import ru.ivmiit.model.enums.BookStatus;
 
 import javax.persistence.*;
 
@@ -24,4 +25,7 @@ public class Book {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id")
     private Author author;
+
+    @Enumerated(value = EnumType.STRING)
+    private BookStatus bookStatus;
 }

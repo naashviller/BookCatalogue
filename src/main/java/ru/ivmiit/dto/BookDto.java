@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.ivmiit.model.Book;
+import ru.ivmiit.model.enums.BookStatus;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +19,7 @@ public class BookDto {
     private String title;
     private String genre;
     private String authorName;
+    private BookStatus status;
 
     public static BookDto from(Book book) {
         return BookDto.builder()
@@ -25,6 +27,7 @@ public class BookDto {
                 .genre(book.getGenre())
                 .title(book.getTitle())
                 .authorName(book.getAuthor().getName())
+                .status(book.getBookStatus())
                 .build();
     }
 

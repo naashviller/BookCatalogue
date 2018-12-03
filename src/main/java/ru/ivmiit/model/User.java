@@ -1,5 +1,6 @@
 package ru.ivmiit.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import ru.ivmiit.model.enums.Role;
 
@@ -13,6 +14,7 @@ import java.util.Set;
 @ToString
 @Builder
 @EqualsAndHashCode
+@JsonIgnoreProperties
 
 @Entity
 @Table(name = "catalogue_user")

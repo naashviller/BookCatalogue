@@ -8,6 +8,7 @@ import ru.ivmiit.forms.EditBookStatusForm;
 import ru.ivmiit.model.Author;
 import ru.ivmiit.model.Book;
 import ru.ivmiit.model.UserBook;
+import ru.ivmiit.model.enums.BookStatus;
 import ru.ivmiit.repositories.AuthorsRepository;
 import ru.ivmiit.repositories.BookRepository;
 import ru.ivmiit.repositories.UserBooksRepository;
@@ -67,7 +68,12 @@ public class BooksServiceImpl implements BooksService {
     }
 
     @Override
-    public Book getBookByAuthor(Integer id) {
-        return bookRepository.findBookByAuthor(authorsRepository.getAuthorById(id));
+    public List<Book> getBooksByAuthor(String author) {
+        return bookRepository.findBooksByAuthorName(author);
+    }
+
+    @Override
+    public List<Book> getBooksByBookStatus(BookStatus status){
+        return bookRepository.findBooksByBookStatus(status);
     }
 }

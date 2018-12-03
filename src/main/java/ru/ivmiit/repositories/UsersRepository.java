@@ -7,7 +7,7 @@ import ru.ivmiit.model.enums.Role;
 import java.util.List;
 import java.util.Optional;
 
-public interface UsersRepository extends JpaRepository<User, Integer> {
+public interface UsersRepository extends JpaRepository<User, Long> {
     Optional<User> findByToken(String token);
 
     List<User> findAllByRole(Role role);

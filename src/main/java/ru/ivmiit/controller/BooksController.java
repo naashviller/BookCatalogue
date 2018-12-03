@@ -8,37 +8,39 @@ import ru.ivmiit.dto.BookDto;
 import ru.ivmiit.forms.BookForm;
 import ru.ivmiit.forms.EditBookStatusForm;
 import ru.ivmiit.model.Book;
-import ru.ivmiit.model.UserBook;
 import ru.ivmiit.model.enums.BookStatus;
 import ru.ivmiit.service.BooksService;
-import ru.ivmiit.service.UserBooksService;
 
 import java.util.List;
 
 @RestController
 public class BooksController {
 
-    @Autowired
-    private BooksService booksService;
+    private final BooksService booksService;
 
-    private UserBooksService userBooksService;
+    @Autowired
+    public BooksController(BooksService booksService) {
+        this.booksService = booksService;
+    }
 
     @GetMapping("/books")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<List<BookDto>> getAllBooks(@RequestHeader("token") String token) {
+    //@PreAuthorize("isAuthenticated()")
+    public ResponseEntity<List<BookDto>> getAllBooks() {
+    //public ResponseEntity<List<BookDto>> getAllBooks(@RequestHeader("token") String token) {
         return ResponseEntity.ok(booksService.getAllBooks());
     }
 
     @GetMapping("/books/search/status")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<List<UserBook>> getAllBooksBooked(@PathVariable("status") BookStatus status, @RequestHeader("token") String token) {
-        return ResponseEntity.ok(userBooksService.getAllBooksBooked(status));
+    public ResponseEntity<List<Book>> getAllBooksBooked(@PathVariable("status") BookStatus status) {
+        return ResponseEntity.ok(booksService.getBooksByBookStatus(status));
     }
 
-    @PostMapping("/books")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Object> addBook(@RequestBody BookForm form, @RequestHeader("token") String token) {
-        booksService.addBook(form);
+    @PostMapping("/addBooks")
+    //@PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Object> addBook(@RequestBody BookForm form) {
+        //public ResponseEntity<Object> addBook(@RequestBody BookForm form, @RequestHeader("token") String token) {
+            booksService.addBook(form);
         return ResponseEntity.ok().build();
     }
 
@@ -49,21 +51,22 @@ public class BooksController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/books/search/title/{title}")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Book> getBookByTitle(@PathVariable("title") String title, @RequestHeader("token") String token) {
+    @GetMapping("/books/search/title")
+    //@PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Book> getBookByTitle(@RequestParam("title") String title) {
         return ResponseEntity.ok(booksService.getBookByTitle(title));
     }
 
-    @GetMapping("/books/search/genre/{genre}")
+    @GetMapping("/books/search/genre")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<List<Book>> getBookByGenre(@PathVariable("genre") String genre, @RequestHeader("token") String token) {
+    public ResponseEntity<List<Book>> getBookByGenre(@RequestParam("genre") String genre) {
         return ResponseEntity.ok(booksService.getBooksByGenre(genre));
     }
 
-    @GetMapping("/books/search/author/{authorId}")
+    @GetMapping("/books/search/author")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Book> getBookByAuthor(@PathVariable("authorId") Integer authorId, @RequestHeader("token") String token) {
-        return ResponseEntity.ok(booksService.getBookByAuthor(authorId));
+    public ResponseEntity<List<Book>> getBookByAuthor(@RequestParam("author") String author) {
+        return ResponseEntity.ok(booksService.getBooksByAuthor(author));
     }
+
 }
