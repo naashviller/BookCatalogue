@@ -13,8 +13,12 @@ import java.util.Optional;
 @Service(value = "tokenUserDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+    private final UsersRepository usersRepository;
+
     @Autowired
-    private UsersRepository usersRepository;
+    public UserDetailsServiceImpl(UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String token) throws UsernameNotFoundException {

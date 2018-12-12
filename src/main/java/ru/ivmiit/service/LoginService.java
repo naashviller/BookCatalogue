@@ -3,10 +3,11 @@ package ru.ivmiit.service;
 import ru.ivmiit.dto.TokenDto;
 import ru.ivmiit.forms.LoginPasswordForm;
 import ru.ivmiit.forms.ResetPasswordForm;
+import ru.ivmiit.model.User;
 
 public interface LoginService {
 
-    TokenDto login(LoginPasswordForm loginPassword);
+    User login(LoginPasswordForm loginPassword);
 
     TokenDto refreshToken();
 

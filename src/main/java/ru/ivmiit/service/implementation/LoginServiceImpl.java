@@ -39,15 +39,15 @@ public class LoginServiceImpl implements LoginService {
     private Integer jwtExpiredDays;
 
     @Override
-    public TokenDto login(LoginPasswordForm loginPassword) {
+    public User login(LoginPasswordForm loginPassword) {
         String rawPassword = loginPassword.getPassword();
         String login = loginPassword.getLogin().toLowerCase();
 
         User user = usersRepository.findOneByLogin(login).orElseThrow(()
                 -> new BadCredentialsException("User login/password incorrect"));
 
-        if (passwordEncoder.matches(rawPassword, user.getHashPassword()) && user.getRole().equals(Role.USER)) {
-            return TokenDto.builder().token("JWT " + getTokenAsString(user)).build();
+        if (passwordEncoder.matches(rawPassword, user.getHashPassword())) {
+            return usersRepository.findOneByLogin(login).get();
         } else throw new BadCredentialsException("User login/password incorrect");
     }
 

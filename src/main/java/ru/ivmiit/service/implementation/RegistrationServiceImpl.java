@@ -1,5 +1,7 @@
 package ru.ivmiit.service.implementation;
 
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,7 @@ public class RegistrationServiceImpl implements RegistrationService {
             if (form.getLogin() != null && form.getPassword() != null) {
                 User user = User.builder()
                         .login(form.getLogin())
+                        .token(RandomStringUtils.random(10))
                         .hashPassword(encoder.encode(form.getPassword()))
                         .role(Role.USER)
                         .build();

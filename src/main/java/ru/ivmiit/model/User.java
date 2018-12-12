@@ -39,6 +39,7 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "book")
     private Set<UserBook> userBookSet;
 
+    @Column(name = "token")
     private String token;
 
     public boolean isAdmin() {

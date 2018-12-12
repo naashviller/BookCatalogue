@@ -9,33 +9,28 @@ import ru.ivmiit.repositories.UsersRepository;
 import ru.ivmiit.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UsersRepository usersRepository;
+    private final UsersRepository usersRepository;
 
-//    @Autowired
-//    private AuthenticationImpl authentication;
+    @Autowired
+    public UserServiceImpl(UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
+    }
 
     @Override
     public List<UserDto> getUsers(String role) {
         return UserDto.from(usersRepository.findAllByRole(Role.valueOf(role)));
     }
 
-//    @Override
-//    public UserDto getUserById(String userId) {
-//        User current = authentication.getCurrentUser();
-//        User user = usersRepository.getOne(Integer.valueOf(userId));
-//        if (current.isAdmin()) {
-//            return UserDto.from(user);
-//        } else if (current.isReader() && current.getId().equals(user.getId())) {
-//            return UserDto.from(user);
-//        } else if (current.isUser() && current.getId().equals(user.getId())) {
-//            return UserDto.from(user);
-//        } else throw new IllegalArgumentException("user not found");
-//    }
+    @Override
+    public String getUserRoleByToken(String token) {
+        System.out.println(token);
+        return usersRepository.findByToken(token).get().getRole().toString();
+    }
 }
 
 
