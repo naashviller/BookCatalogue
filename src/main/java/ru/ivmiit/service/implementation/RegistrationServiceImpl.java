@@ -26,10 +26,9 @@ public class RegistrationServiceImpl implements RegistrationService {
         if (usersRepository.findOneByLogin(form.getLogin()).isPresent()) {
             throw new Exception("User with this email already exists");
         } else {
-            if (form.getLogin() != null && form.getEmail() != null && form.getPassword() != null) {
+            if (form.getLogin() != null && form.getPassword() != null) {
                 User user = User.builder()
                         .login(form.getLogin())
-                        .email(form.getEmail())
                         .hashPassword(encoder.encode(form.getPassword()))
                         .role(Role.USER)
                         .build();

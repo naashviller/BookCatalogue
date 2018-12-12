@@ -11,13 +11,18 @@ import ru.ivmiit.service.AuthenticationService;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
+    private final UsersRepository usersRepository;
+
     @Autowired
-    UsersRepository usersRepository;
+    public AuthenticationServiceImpl(UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
+    }
 
     @Override
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Long userId = ((UserDetailsImpl) authentication.getDetails()).getUser().getId();
+        System.out.println(authentication.getPrincipal());
+        Long userId = ((UserDetailsImpl) authentication.getPrincipal()).getUser().getId();
         return usersRepository.getOne(userId);
     }
 }

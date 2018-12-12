@@ -29,8 +29,8 @@ public class BooksServiceImpl implements BooksService {
     private UserBooksRepository userBooksRepository;
 
     @Override
-    public List<BookDto> getAllBooks() {
-        return BookDto.from(bookRepository.findAll());
+    public List<Book> getAllBooks() {
+        return bookRepository.findAll();
     }
 
 
@@ -75,5 +75,10 @@ public class BooksServiceImpl implements BooksService {
     @Override
     public List<Book> getBooksByBookStatus(BookStatus status){
         return bookRepository.findBooksByBookStatus(status);
+    }
+
+    @Override
+    public List<Book> getBooksByBookStatusIsBooked() {
+        return bookRepository.findBooksByBookStatusIs(BookStatus.BOOKED);
     }
 }

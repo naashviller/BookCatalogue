@@ -1,7 +1,6 @@
 package ru.ivmiit.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.ivmiit.model.Author;
 import ru.ivmiit.model.Book;
 import ru.ivmiit.model.enums.BookStatus;
 
@@ -18,4 +17,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findBooksByAuthorName(String name);
 
     List<Book> findBooksByBookStatus(BookStatus status);
+
+    List<Book> findBooksByBookStatusIs(BookStatus bookStatus);
 }
