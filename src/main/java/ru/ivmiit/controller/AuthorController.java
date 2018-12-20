@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.ivmiit.model.Author;
 import ru.ivmiit.service.AuthorService;
 
+import java.util.List;
+
 @RestController
 public class AuthorController {
     private final AuthorService authorService;
@@ -16,11 +18,14 @@ public class AuthorController {
         this.authorService = authorService;
     }
 
-
     @GetMapping("/author")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Author> getAuthorByNameAndLastname(@RequestParam("name") String name, @RequestParam("lastname") String lastname) {
         return ResponseEntity.ok(authorService.getAuthorByNameAndLastName(name,lastname));
+    }
+
+    @GetMapping("/authors")
+    public ResponseEntity<List<Author>> getAllAuthors() {
+        return ResponseEntity.ok(authorService.getAllAuthors());
     }
 
 }

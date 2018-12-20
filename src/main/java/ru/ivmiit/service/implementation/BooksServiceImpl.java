@@ -2,7 +2,6 @@ package ru.ivmiit.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.ivmiit.dto.BookDto;
 import ru.ivmiit.forms.BookForm;
 import ru.ivmiit.forms.EditBookStatusForm;
 import ru.ivmiit.model.Author;
@@ -19,31 +18,32 @@ import java.util.List;
 @Service
 public class BooksServiceImpl implements BooksService {
 
-    @Autowired
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
+    private final AuthorsRepository authorsRepository;
+    private final UserBooksRepository userBooksRepository;
 
     @Autowired
-    private AuthorsRepository authorsRepository;
-
-    @Autowired
-    private UserBooksRepository userBooksRepository;
+    public BooksServiceImpl(BookRepository bookRepository, AuthorsRepository authorsRepository, UserBooksRepository userBooksRepository) {
+        this.bookRepository = bookRepository;
+        this.authorsRepository = authorsRepository;
+        this.userBooksRepository = userBooksRepository;
+    }
 
     @Override
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
 
-
-
-
     @Override
     public void addBook(BookForm form) {
-        Author author = authorsRepository.getOne(form.getAuthorId());
+        Author author = authorsRepository.getAuthorByNameAndLastName(
+                form.getAuthor().getName(), form.getAuthor().getLastName());
 
         Book book = Book.builder()
                 .author(author)
                 .genre(form.getGenre())
                 .title(form.getTitle())
+                .bookStatus(BookStatus.FREE)
                 .build();
 
         bookRepository.save(book);

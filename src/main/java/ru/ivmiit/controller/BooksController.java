@@ -33,15 +33,13 @@ public class BooksController {
         return ResponseEntity.ok(booksService.getBooksByBookStatusIsBooked());
     }
 
-    @PostMapping("/addBooks")
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping("/books/add")
     public ResponseEntity<Object> addBook(@RequestBody BookForm form) {
         booksService.addBook(form);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/books/edit/status")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Object> editBookStatus(@RequestBody EditBookStatusForm form) {
         booksService.changeBookStatus(form);
         return ResponseEntity.ok().build();

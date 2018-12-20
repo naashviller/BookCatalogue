@@ -6,13 +6,24 @@ import ru.ivmiit.model.Author;
 import ru.ivmiit.repositories.AuthorsRepository;
 import ru.ivmiit.service.AuthorService;
 
+import java.util.List;
+
 @Service
 public class AuthorServiceImpl implements AuthorService{
+    private final AuthorsRepository authorsRepository;
+
     @Autowired
-    private AuthorsRepository authorsRepository;
+    public AuthorServiceImpl(AuthorsRepository authorsRepository) {
+        this.authorsRepository = authorsRepository;
+    }
 
     @Override
     public Author getAuthorByNameAndLastName(String name, String lastname) {
         return authorsRepository.getAuthorByNameAndLastName(name, lastname);
+    }
+
+    @Override
+    public List<Author> getAllAuthors() {
+        return authorsRepository.findAll();
     }
 }
