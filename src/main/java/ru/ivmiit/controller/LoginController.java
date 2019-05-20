@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.ivmiit.dto.TokenDto;
+import ru.ivmiit.dto.UserDto;
 import ru.ivmiit.forms.LoginPasswordForm;
 import ru.ivmiit.forms.ResetPasswordForm;
 import ru.ivmiit.model.User;
@@ -13,6 +14,7 @@ import ru.ivmiit.service.UserService;
 
 @RestController
 public class LoginController {
+
     private final AuthenticationService authenticationService;
     private final LoginService loginService;
     private final UserService userService;
@@ -27,19 +29,19 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody LoginPasswordForm loginPassword) {
-        System.out.println(loginPassword.getLogin());
-        System.out.println(loginPassword.getPassword());
         return ResponseEntity.ok(loginService.login(loginPassword));
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<TokenDto> refreshToken(@RequestHeader("Authorization") String authorization) {
+    public ResponseEntity<TokenDto> refreshToken(
+            @RequestHeader("Authorization") String authorization) {
         return ResponseEntity.ok(loginService.refreshToken());
     }
 
 
     @PostMapping("/password")
-    public void resetPassword(@RequestBody ResetPasswordForm passwordForm, @RequestHeader("Authorization") String authorization) {
+    public void resetPassword(@RequestBody ResetPasswordForm passwordForm,
+                              @RequestHeader("Authorization") String authorization) {
         loginService.resetPassword(passwordForm);
     }
 
@@ -51,5 +53,10 @@ public class LoginController {
     @GetMapping("/user/{token}")
     public ResponseEntity<String> getAuthenticatedUserData(@PathVariable("token") String token) {
         return ResponseEntity.ok(userService.getUserRoleByToken(token));
+    }
+
+    @GetMapping("/user/{token}/all")
+    public ResponseEntity<UserDto> getAuthenticatedUser(@PathVariable("token") String token) {
+        return ResponseEntity.ok(userService.getUserByToken(token));
     }
 }

@@ -11,7 +11,6 @@ import ru.ivmiit.dto.TokenDto;
 import ru.ivmiit.forms.LoginPasswordForm;
 import ru.ivmiit.forms.ResetPasswordForm;
 import ru.ivmiit.model.User;
-import ru.ivmiit.model.enums.Role;
 import ru.ivmiit.repositories.UsersRepository;
 import ru.ivmiit.service.AuthenticationService;
 import ru.ivmiit.service.LoginService;
@@ -43,9 +42,12 @@ public class LoginServiceImpl implements LoginService {
         String rawPassword = loginPassword.getPassword();
         String login = loginPassword.getLogin().toLowerCase();
 
-        User user = usersRepository.findOneByLogin(login).orElseThrow(()
+        User user = usersRepository.findByLogin(login).orElseThrow(()
                 -> new BadCredentialsException("User login/password incorrect"));
 
+        if (user == null) {
+            return null;
+        }
         if (passwordEncoder.matches(rawPassword, user.getHashPassword())) {
             return usersRepository.findOneByLogin(login).get();
         } else throw new BadCredentialsException("User login/password incorrect");

@@ -6,7 +6,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.ivmiit.model.User;
-import ru.ivmiit.model.enums.Role;
 
 import java.util.Collection;
 import java.util.Collections;

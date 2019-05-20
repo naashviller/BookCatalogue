@@ -1,7 +1,6 @@
 package ru.ivmiit.forms;
 
 import lombok.Data;
-import ru.ivmiit.model.enums.Role;
 
 @Data
 public class UserForm {

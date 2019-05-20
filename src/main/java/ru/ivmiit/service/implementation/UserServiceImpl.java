@@ -9,7 +9,6 @@ import ru.ivmiit.repositories.UsersRepository;
 import ru.ivmiit.service.UserService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,6 +29,14 @@ public class UserServiceImpl implements UserService {
     public String getUserRoleByToken(String token) {
         System.out.println(token);
         return usersRepository.findByToken(token).get().getRole().toString();
+    }
+
+    @Override
+    public UserDto getUserByToken(String token) {
+        User user = usersRepository.findByToken(token)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid token"));
+
+        return UserDto.from(user);
     }
 }
 

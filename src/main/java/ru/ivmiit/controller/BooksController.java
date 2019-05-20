@@ -1,25 +1,27 @@
 package ru.ivmiit.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import ru.ivmiit.dto.BookDto;
 import ru.ivmiit.forms.BookForm;
 import ru.ivmiit.forms.EditBookStatusForm;
 import ru.ivmiit.model.Book;
-import ru.ivmiit.model.enums.BookStatus;
+import ru.ivmiit.service.AuthenticationService;
 import ru.ivmiit.service.BooksService;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 @RestController
 public class BooksController {
 
+    private final AuthenticationService authenticationService;
     private final BooksService booksService;
 
     @Autowired
-    public BooksController(BooksService booksService) {
+    public BooksController(AuthenticationService authenticationService, BooksService booksService) {
+        this.authenticationService = authenticationService;
         this.booksService = booksService;
     }
 
@@ -40,13 +42,21 @@ public class BooksController {
     }
 
     @PostMapping("/books/edit/status")
-    public ResponseEntity<Object> editBookStatus(@RequestBody EditBookStatusForm form) {
+    public ResponseEntity<Object> editBookStatus(@RequestBody EditBookStatusForm form)
+            throws MessagingException {
         booksService.changeBookStatus(form);
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/books/notify/{id}/{userId}")
+    public ResponseEntity<String> prepareEmail(@PathVariable("id") Long bookId,
+                                               @PathVariable("userId") Long userId) {
+        booksService.prepareNotificationEmail(bookId, userId);
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
     @GetMapping("/books/search/title")
-    public ResponseEntity<Book> getBookByTitle(@RequestParam("title") String title) {
+    public ResponseEntity<List<Book>> getBookByTitle(@RequestParam("title") String title) {
         return ResponseEntity.ok(booksService.getBookByTitle(title));
     }
 

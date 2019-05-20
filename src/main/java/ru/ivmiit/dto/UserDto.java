@@ -19,12 +19,14 @@ public class UserDto {
     private Long id;
     private String login;
     private String username;
+    private String email;
     private Role role;
 
-    public static UserDto from(User user){
+    public static UserDto from(User user) {
         return UserDto.builder()
                 .id(user.getId())
                 .login(user.getLogin())
+                .email(user.getEmail())
                 .role(user.getRole())
                 .build();
     }

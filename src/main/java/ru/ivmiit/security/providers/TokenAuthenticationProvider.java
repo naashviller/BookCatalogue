@@ -18,14 +18,18 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
     private UserDetailsService userDetailsService;
 
     @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    public Authentication authenticate(Authentication authentication)
+            throws AuthenticationException {
         // получили токен, который был  контексте безопасности
-        TokenAuthentication tokenAuthentication = (TokenAuthentication) authentication;
+        TokenAuthentication tokenAuthentication =
+                (TokenAuthentication) authentication;
         // нашли в бд данные о пользоваетеле и его правах
-        UserDetails userDetails = userDetailsService.loadUserByUsername(tokenAuthentication.getName());
+        UserDetails userDetails = userDetailsService
+                .loadUserByUsername(tokenAuthentication.getName());
         // добавили эти данные в объект аутентификации
         tokenAuthentication.setUserDetails(userDetails);
-        // сказали, что с пользователем все нормально и он аутентифицирован
+        // сказали, что с пользователем все нормально
+        // и он аутентифицирован
         tokenAuthentication.setAuthenticated(true);
         return tokenAuthentication;
     }

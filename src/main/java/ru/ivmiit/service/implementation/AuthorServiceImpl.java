@@ -9,7 +9,7 @@ import ru.ivmiit.service.AuthorService;
 import java.util.List;
 
 @Service
-public class AuthorServiceImpl implements AuthorService{
+public class AuthorServiceImpl implements AuthorService {
     private final AuthorsRepository authorsRepository;
 
     @Autowired

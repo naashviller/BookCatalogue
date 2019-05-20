@@ -15,34 +15,30 @@ public class TokenAuthentication implements Authentication {
     public TokenAuthentication(String token) {
         this.token = token;
     }
-
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<? extends GrantedAuthority>
+    getAuthorities() {
         return userDetails.getAuthorities();
     }
-
     @Override
     public Object getCredentials() {
         return null;
     }
-
     @Override
     public Object getDetails() {
         return userDetails;
     }
-
     @Override
     public Object getPrincipal() {
         return null;
     }
-
     @Override
     public boolean isAuthenticated() {
         return isAuthenticated;
     }
-
     @Override
-    public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+    public void setAuthenticated(boolean isAuthenticated)
+            throws IllegalArgumentException {
         this.isAuthenticated = isAuthenticated;
     }
 
